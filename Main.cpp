@@ -6,13 +6,82 @@
 using namespace sf;
 using namespace std;
 
+bool Animation;
+
+int step = 1;
+
 Texture texture;
 Sprite Charmander;
 
+RenderWindow window(VideoMode(480, 360), "PokeMOBA!");
+
+void walkUpAnimation()
+{
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(0,0,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	window.display();
+	Charmander.move(0,-5.1);
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(32,0,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	Charmander.move(0,-5.1);
+	window.display();
+
+}
+
+void walkDownAnimation()
+{
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(0,32,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	window.display();
+	Charmander.move(0,+5.1);
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(32,32,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	Charmander.move(0,+5.1);
+	window.display();
+}
+
+void walkLeftAnimation()
+{
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(0,64,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	window.display();
+	Charmander.move(-5.1,0);
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(32,64,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	Charmander.move(-5.1,0);
+	window.display();
+}
+
+void walkRightAnimation()
+{
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(0,96,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	window.display();
+	Charmander.move(+5.1,0);
+	window.clear();
+	texture.loadFromFile("PokeSprites.png", IntRect(32,96,32,32));
+	Charmander.setTexture(texture);
+	window.draw(Charmander);
+	Charmander.move(+5.1,0);
+	window.display();
+}
+
 int main()
 {
-    RenderWindow window(VideoMode(640, 480), "FUCKING CHARMANDER!");
-
     while (window.isOpen())
     {
         Event event;
@@ -22,34 +91,32 @@ int main()
                 window.close();
         }
 
-		Clock TIMER;
-		TIMER.restart();
-		Time t2 = milliseconds(333);
-		Time t1 = TIMER.getElapsedTime();
-		int step = 0;
+		Charmander.setScale(4,4);
+		//BEGINNING OF CONTROLS
 
-		TIMER.restart();
-
-		if (t1 >= milliseconds(333)) 
+		while (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			window.clear();
-			texture.loadFromFile("PokeSprites.png", IntRect(1,1,32,32));
-			Charmander.setTexture(texture);
-			step = 1;
-			TIMER.restart();
-			window.draw(Charmander);
-			window.display();
-
+			// move left...
+			walkLeftAnimation();
 		}
-		if (t1 >= t2)
+		while (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
 			window.clear();
-			texture.loadFromFile("PokeSprites.png", IntRect(0,32,32,32));
-			Charmander.setTexture(texture);
-			step = 0;
-			TIMER.restart();
-			window.draw(Charmander);
-			window.display();
+			// move right...
+			walkRightAnimation();
+		}
+		while (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			window.clear();
+			// move Up...
+			walkUpAnimation();
+		}
+		while (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			window.clear();
+			// move Down...
+			walkDownAnimation();
 		}
     }
 
